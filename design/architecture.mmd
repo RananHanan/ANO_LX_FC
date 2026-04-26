@@ -1,0 +1,35 @@
+flowchart TD
+  Startup["Startup / Reset\nstartup_stm32f4xx + system_stm32f4xx"]
+  Main["`main()`\n入口: FcSrc/main.c"]
+  AllInit["`All_Init()`\n(board init, drv_bsp)"]
+  subgraph Drivers[驱动层]
+    drv_bsp["drv_bsp"]
+    drv_adc["drv_adc"]
+    drv_pwmout["drv_pwmout"]
+    drv_uart["drv_uart"]
+    drv_rcin["drv_rcin"]
+    drv_sys["drv_sys"]
+    drv_timer["drv_timer"]
+    drv_led["drv_led"]
+    drv_ubloxgps["drv_ubloxgps"]
+  end
+  Scheduler["`Ano_Scheduler`\n(Scheduler_Setup / Scheduler_Run)\nLoops: 1000/500/200/100/50/20/2Hz"]
+  subgraph App[应用层 / 任务层]
+    lx_fc_fun["lx_fc_fun"]
+    lx_fc_state["lx_fc_state"]
+    lx_fc_ext_sensor["lx_fc_ext_sensor"]
+    misc["misc"]
+    user_task["user_task"]
+  end
+
+  Startup --> Main --> AllInit --> Drivers
+  Main --> Scheduler --> App
+  Drivers --> Scheduler
+  Drivers --> App
+  Scheduler --> user_task
+  user_task --> lx_fc_fun
+  lx_fc_fun --> lx_fc_state
+  lx_fc_ext_sensor --> lx_fc_fun
+
+  classDef layer fill:#f8f9fa,stroke:#333,stroke-width:1px;
+  class Drivers,App layer;
