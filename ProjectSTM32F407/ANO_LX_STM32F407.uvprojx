@@ -464,6 +464,16 @@
               <FileType>5</FileType>
               <FilePath>..\FcSrc\LX_FC_State.h</FilePath>
             </File>
+            <File>
+              <FileName>get_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FcSrc\get_data.c</FilePath>
+            </File>
+            <File>
+              <FileName>get_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\FcSrc\get_data.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -685,5 +695,14 @@
     <components/>
     <files/>
   </RTE>
+
+  <LayerInfo>
+    <Layers>
+      <Layer>
+        <LayName>ANO_LX_STM32F407</LayName>
+        <LayPrjMark>1</LayPrjMark>
+      </Layer>
+    </Layers>
+  </LayerInfo>
 
 </Project>

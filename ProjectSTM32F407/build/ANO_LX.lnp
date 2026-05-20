@@ -7,6 +7,7 @@
 ".\build\lx_fc_ext_sensor.o"
 ".\build\lx_fc_fun.o"
 ".\build\lx_fc_state.o"
+".\build\get_data.o"
 ".\build\drv_bsp.o"
 ".\build\ano_math.o"
 ".\build\drv_anoof.o"

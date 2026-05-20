@@ -213,6 +213,25 @@ static void ANO_DT_LX_Data_Receive_Anl(u8 *data, u8 len)
 			fc_att_qua.byte_data[i] = *(data + 4 + i);
 		}			
 	}
+///////////////////////////////////////////////////////////////////////////////////
+	//高度数据
+	else if (*(data + 2) == 0X05)
+	{
+		for(u8 i=0;i<9;i++)
+		{
+			fc_hight.byte_data[i] = *(data + 4 + i);
+		}		
+	}
+	//位置偏移数据
+	else if (*(data + 2) == 0X08)
+	{
+		for(u8 i=0;i<8;i++)
+		{
+			fc_dis.byte_data[i] = *(data + 4 + i);
+		}		
+	}
+
+////////////////////////////////////////////////////////////	
 	//传感器数据
 	else if (*(data + 2) == 0X01)
 	{

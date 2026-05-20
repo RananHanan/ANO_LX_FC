@@ -33,7 +33,7 @@ typedef union
 	_rc_ch_st st_data;
 }_rc_ch_un;
 
-//0x41
+//0x41 飞控收到的控制指令
 typedef struct
 {
 	s16 rol;
@@ -52,7 +52,7 @@ typedef union
 	_rt_tar_st st_data;
 }_rt_tar_un;
 
-//0x0D
+//0x0D 电压电流
 typedef struct
 {
 	u16 voltage_100;
@@ -66,7 +66,7 @@ typedef union
 	_fc_bat_st st_data;
 }_fc_bat_un;
 
-//0x03
+//0x03 飞控姿态：欧拉角格式
 typedef struct
 {
 	s16 rol_x100;
@@ -81,7 +81,7 @@ typedef union
 	_fc_att_st st_data;
 }_fc_att_un;
 
-//0x04
+//0x04 飞控姿态：四元数格式
 typedef struct
 {
 	s16 w_x10000;
@@ -96,8 +96,37 @@ typedef union
 	u8 byte_data[9];
 	_fc_att_qua_st st_data;
 }_fc_att_qua_un;
+//////////////////////////////////////////////////////////////////////////
+//0x05高度数据
+typedef struct
+{
+	s32 alt_fu;
+	s32 alt_add;
+	s8 alt_sta;
+}__attribute__ ((__packed__)) _fc_higt_st;
 
-//0x07
+typedef union 
+{
+	u8 byte_data[9];
+	_fc_higt_st st_data;
+}fc_hight_un;
+
+//0x08位置偏移数据
+typedef struct
+{
+	s32 pix_x;
+	s32 pix_y;	
+}__attribute__ ((__packed__)) _fc_dis_st;
+
+typedef union 
+{
+	u8 byte_data[8];
+	_fc_dis_st st_data;
+}fc_dis_un;		
+
+
+////////////////////////////////////////////////////////////////
+//0x07 飞行速度数据
 typedef struct
 {
 	s16 vel_x;
@@ -131,6 +160,9 @@ extern _fc_vel_un fc_vel;
 extern _rt_tar_un rt_tar;
 extern _fc_bat_un fc_bat;
 extern _pwm_st pwm_to_esc;
+
+extern fc_hight_un fc_hight;//0x05高度数据
+extern fc_dis_un fc_dis;//0x08位置偏移数据
 //==函数声明
 //static
 

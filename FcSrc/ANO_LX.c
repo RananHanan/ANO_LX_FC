@@ -30,12 +30,15 @@
  * 只有您的支持，匿名才能做得更好。  
 ===========================================================================*/
 
-_rt_tar_un rt_tar;
-_pwm_st pwm_to_esc;
-_fc_bat_un fc_bat;
-_fc_att_un fc_att;
-_fc_att_qua_un fc_att_qua;
-_fc_vel_un fc_vel;
+_rt_tar_un rt_tar;//0x41 飞控收到的控制指令
+_pwm_st pwm_to_esc;//0x20 飞控输出的电调PWM数据
+_fc_bat_un fc_bat;//0x0D 电压电流
+_fc_att_un fc_att;//0x03 飞控姿态：欧拉角格式
+_fc_att_qua_un fc_att_qua;//0x04 飞控姿态：四元数格式
+_fc_vel_un fc_vel;//0x07 飞行速度数据
+
+fc_hight_un fc_hight;//0x05高度数据
+fc_dis_un fc_dis;//0x08位置偏移数据
 
 //遥控CH5(AUX1)通道值(1000-1500-2000)设置模式1-2-3，模式0需要通过单独发送指令设置
 //模式0：姿态自稳    ->遥控CH1-CH4直接控制姿态和油门。
