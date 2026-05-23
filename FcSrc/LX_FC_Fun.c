@@ -63,6 +63,7 @@ u8 FC_Lock()
 }
 
 //改变飞控模式(模式0-3)
+//0:
 u8 LX_Change_Mode(u8 new_mode)
 {
 	static u8 old_mode;

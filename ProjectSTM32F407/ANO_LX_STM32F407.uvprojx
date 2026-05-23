@@ -474,6 +474,61 @@
               <FileType>5</FileType>
               <FilePath>..\FcSrc\get_data.h</FilePath>
             </File>
+            <File>
+              <FileName>control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FcSrc\control.c</FilePath>
+            </File>
+            <File>
+              <FileName>control.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\FcSrc\control.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>User</GroupName>
+          <Files>
+            <File>
+              <FileName>computer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\computer.c</FilePath>
+            </File>
+            <File>
+              <FileName>computer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\computer.h</FilePath>
+            </File>
+            <File>
+              <FileName>vision.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\vision.c</FilePath>
+            </File>
+            <File>
+              <FileName>vision.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\vision.h</FilePath>
+            </File>
+            <File>
+              <FileName>my_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\my_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>my_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\my_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>Niming_UpperComputer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\Niming_UpperComputer.c</FilePath>
+            </File>
+            <File>
+              <FileName>Niming_UpperComputer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Niming_UpperComputer.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

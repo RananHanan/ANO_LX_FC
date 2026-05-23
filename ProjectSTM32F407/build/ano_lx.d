@@ -41,3 +41,4 @@
 .\build\ano_lx.o: ..\DriversBsp\Drv_UbloxGPS.h
 .\build\ano_lx.o: ..\FcSrc\LX_FC_Fun.h
 .\build\ano_lx.o: ..\DriversMcu\STM32F407\Drivers\Drv_Uart.h
+.\build\ano_lx.o: ..\FcSrc\control.h

@@ -12,6 +12,8 @@
 #include "LX_FC_Fun.h"
 #include "Drv_Uart.h"
 
+#include "control.h"
+
 /*==========================================================================
  * 描述    ：凌霄飞控输入、输出主程序
  * 更新时间：2020-01-22 
@@ -62,66 +64,89 @@ fc_dis_un fc_dis;//0x08位置偏移数据
 static inline void RC_Data_Task(float dT_s)
 {
 	static u8 fail_safe_change_mod, fail_safe_return_home;
-	static u8 mod_f[3];
-	static u16 mod_f_time_cnt;
+	
+	//static u8 mod_f[3];
+	//static u16 mod_f_time_cnt;
 
 	//遥控没有失控标记才执行
 	if ( rc_in.fail_safe == 0)
 	{
 		//摇杆数据设置模式（姿态+气压定高，定高定点，程控）
 		//注意，程控模式下，飞控只响应发送指令提供的信号，不再响应摇杆。
-		if (rc_in.rc_ch.st_data.ch_[ch_5_aux1] < 1200)
+		if (rc_in.rc_ch.st_data.ch_[ch_7_aux3] < 1200)
 		{
 			LX_Change_Mode(1);
-			mod_f[0] = 1;
+			//mod_f[0] = 1;
+			my_code_control_flag=0;
 		}
-		else if (rc_in.rc_ch.st_data.ch_[ch_5_aux1] < 1700)
+		else if (rc_in.rc_ch.st_data.ch_[ch_7_aux3] < 1700)
 		{
 			LX_Change_Mode(2);
-			mod_f[0] = 2;
+			//mod_f[0] = 2;
+			my_code_control_flag=0;
 		}
 		else
 		{
-			LX_Change_Mode(3);
-			mod_f[0] = 3;
+			//LX_Change_Mode(3);
+			//mod_f[0] = 3;
+			LX_Change_Mode(2);
+			my_code_control_flag=1;
 		}
-		//有切换模式时执行
-		if (mod_f[1] != mod_f[0])
+		
+		
+		
+		//这里我认为使用实时帧进行控制，这段代码无效，全程在定点模式下进行。
+//		//有切换模式时执行
+//		if (mod_f[1] != mod_f[0])
+//		{
+//			mod_f[1] = mod_f[0];
+//			//如果是模式3，自增一次。
+//			if (mod_f[0] == 3)
+//			{
+//				mod_f[2]++;
+//			}
+//		}
+//		//此段程序功能时2000ms内检测切换程控模式的次数,达到3次则执行返航
+//		if (mod_f[2] != 0)
+//		{
+//			if (mod_f_time_cnt < 2000)
+//			{
+//				mod_f_time_cnt += 1e3f * dT_s;
+//			}
+//			else
+//			{
+//				u8 tmp;
+//				if (mod_f[2] >= 3)
+//				{
+//					//执行返航
+//					tmp = OneKey_Return_Home();
+//				}
+//				else
+//				{
+//					//null
+//				}
+//				//reset
+//				if (tmp)
+//				{
+//					mod_f_time_cnt = 0;
+//					mod_f[2] = 0;
+//				}
+//			}
+//		}
+		
+//////////////////////////////////////////////////////////////////////////////
+		//所有遥杆在中位时，才能使用实时帧进行控制
+		if(my_code_control_flag==1)
 		{
-			mod_f[1] = mod_f[0];
-			//如果是模式3，自增一次。
-			if (mod_f[0] == 3)
+			for(int i=0;i<4;i++)
 			{
-				mod_f[2]++;
-			}
-		}
-		//此段程序功能时2000ms内检测切换程控模式的次数,达到3次则执行返航
-		if (mod_f[2] != 0)
-		{
-			if (mod_f_time_cnt < 2000)
-			{
-				mod_f_time_cnt += 1e3f * dT_s;
-			}
-			else
-			{
-				u8 tmp;
-				if (mod_f[2] >= 3)
+				if((rc_in.rc_ch.st_data.ch_[i]>1300)&&(rc_in.rc_ch.st_data.ch_[i]<1700))
 				{
-					//执行返航
-					tmp = OneKey_Return_Home();
-				}
-				else
-				{
-					//null
-				}
-				//reset
-				if (tmp)
-				{
-					mod_f_time_cnt = 0;
-					mod_f[2] = 0;
+					rc_in.rc_ch.st_data.ch_[i]=1500;
 				}
 			}
 		}
+		
 
 		//摇杆数据转换物理控制量
 		//摇杆数据转换到+-500并加死区
@@ -149,10 +174,22 @@ static inline void RC_Data_Task(float dT_s)
 //		}
 		//############(实时控制帧，自主开发闭环控制，在这里赋值即可)##############
 		//实时XYZ-YAW期望速度(实时控制帧)
-//		rt_tar.st_data.yaw_dps = 0;  //航向转动角速度，度每秒，逆时针为正
-//		rt_tar.st_data.vel_x = 0;    //头向速度，厘米每秒
-//		rt_tar.st_data.vel_y = 0;    //左向速度，厘米每秒
-//		rt_tar.st_data.vel_z = 0;	 //天向速度，厘米每秒
+		if(my_code_control_flag==1)
+		{
+			
+			rt_tar.st_data.rol = 0;
+			rt_tar.st_data.pit = 0;
+			rt_tar.st_data.thr = 0;
+			
+			
+			
+			rt_tar.st_data.yaw_dps = -(int)my_give_vel_yaw;  //航向转动角速度，度每秒，逆时针为正
+			rt_tar.st_data.vel_x = (int)my_give_vel_x;    //头向速度，厘米每秒
+			rt_tar.st_data.vel_y = (int)my_give_vel_y;    //左向速度，厘米每秒
+			rt_tar.st_data.vel_z = (int)my_give_vel_z;	 //天向速度，厘米每秒
+			
+		}
+//			
 		//########################################################################
 		//=====
 		dt.fun[0x41].WTS = 1; //将要发送rt_tar数据。

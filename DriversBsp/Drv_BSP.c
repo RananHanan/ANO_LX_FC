@@ -29,9 +29,12 @@ u8 All_Init()
 	DrvPwmOutInit();
 	
 	MyDelayMs(100);
+	//////////////////////////////////////
+	//串口1初始化
+	DrvUart1Init(115200);
 	
 	//串口2初始化，函数参数为波特率
-	DrvUart2Init(500000);
+	DrvUart2Init(115200);
 	
 	//串口3初始化
 	DrvUart3Init(500000);
