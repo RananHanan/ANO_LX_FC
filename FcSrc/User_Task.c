@@ -126,7 +126,7 @@ void UserTask_OneKeyCmd(void)
 				//水平速度
 				case 10:
 				{
-					my_give_vel_x=100;
+					my_give_vel_x=10;
 					User_Task_Delay(3000);
 				}
 				break;

@@ -340,7 +340,7 @@
               <MiscControls>--c99</MiscControls>
               <Define>USE_STDPERIPH_DRIVER,USE_USB_OTG_FS</Define>
               <Undefine></Undefine>
-              <IncludePath>.\build;..\FcSrc;..\DriversBsp;..\DriversMcu\STM32F407\Drivers;..\DriversMcu\STM32F407\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\DriversMcu\STM32F407\Libraries\CMSIS\Include;..\DriversMcu\STM32F407\Libraries\CMSIS\ST\STM32F4xx\Include;..\DriversMcu\STM32F407</IncludePath>
+              <IncludePath>.\build;..\FcSrc;..\DriversBsp;..\DriversMcu\STM32F407\Drivers;..\DriversMcu\STM32F407\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\DriversMcu\STM32F407\Libraries\CMSIS\Include;..\DriversMcu\STM32F407\Libraries\CMSIS\ST\STM32F4xx\Include;..\DriversMcu\STM32F407;..\User</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

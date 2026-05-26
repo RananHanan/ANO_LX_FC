@@ -10,10 +10,12 @@
 #include "Drv_UbloxGPS.h"
 #include "Drv_AnoOf.h"
 
+#include "my_uart.h"
+
 void NoUse(u8 data){}
 //串口接收发送快速定义，直接修改此处的函数名称宏，修改成自己的串口解析和发送函数名称即可，注意函数参数格式需统一
 #define U1GetOneByte	NoUse
-#define U2GetOneByte	NoUse
+#define U2GetOneByte	MY_uart2_Recive
 #define U3GetOneByte	NoUse
 #define U4GetOneByte	AnoOF_GetOneByte
 #define U5GetOneByte	ANO_DT_LX_Data_Receive_Prepare	
@@ -203,15 +205,15 @@ void DrvUart2Init(u32 br_num)
     USART_Cmd(USART2, ENABLE);
 }
 
-u8 TxBuffer[256];
-u8 TxCounter = 0;
+u8 Tx2Buffer[256];
+u8 Tx2Counter = 0;
 u8 count = 0;
 void DrvUart2SendBuf(unsigned char *DataToSend, u8 data_num)
 {
     u8 i;
     for (i = 0; i < data_num; i++)
     {
-        TxBuffer[count++] = *(DataToSend + i);
+        Tx2Buffer[count++] = *(DataToSend + i);
     }
 
     if (!(USART2->CR1 & USART_CR1_TXEIE))
@@ -256,8 +258,8 @@ void Usart2_IRQ(void)
     //发送（进入移位）中断
     if (USART_GetITStatus(USART2, USART_IT_TXE))
     {
-        USART2->DR = TxBuffer[TxCounter++]; //写DR清除中断标志
-        if (TxCounter == count)
+        USART2->DR = Tx2Buffer[Tx2Counter++]; //写DR清除中断标志
+        if (Tx2Counter == count)
         {
             USART2->CR1 &= ~USART_CR1_TXEIE; //关闭TXE（发送中断）中断
         }
