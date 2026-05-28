@@ -1,6 +1,9 @@
 #ifndef __COMPUTER_H
 #define __COMPUTER_H
 
-#include "stm32f10x.h"
+#include "stdint.h"
 
-#endif // __COMPUTER_H
+void Computer_GetByte(u8 data);
+void Computer_Receiver_anl(u8 *data, u8 len);
+
+#endif 

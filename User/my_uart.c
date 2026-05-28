@@ -10,7 +10,7 @@
 int16_t test_data_1,test_data_2;
 int16_t OpenMV_data_0,OpenMV_data_1,OpenMV_data_2;
 
-static u8 Openmv_Rxbuf[50]={0};
+
 	
 void My_uart1_Recive(uint8_t data)
 {
@@ -46,7 +46,7 @@ void My_uart1_Recive(uint8_t data)
     test_data_1|=data_1;
     test_data_2=data_4;
     test_data_2<<=8;
-    test_data_2|=data_3;   
+    test_data_2|=data_3;
 }
 
 void My_uart2_Send(void)
@@ -55,6 +55,7 @@ void My_uart2_Send(void)
     DrvUart2SendBuf(Buf,sizeof(Buf));
 }
 
+static u8 Openmv_Rxbuf[50];
 void MY_uart2_Recive(uint8_t data)
 {
 	static int data_cnt=0;
@@ -153,16 +154,6 @@ void MY_uart2_Recive(uint8_t data)
 		data_cnt=0;
 	}
 
-//	OpenMV_data_0=data_1;
-//	
-//	OpenMV_data_1=data_3;
-//	OpenMV_data_1<<=8;
-//	OpenMV_data_1|=data_2;
-//	
-//	OpenMV_data_2=data_5;
-//	OpenMV_data_2<<=8;
-//	OpenMV_data_2|=data_4;
-	
 	Openmv_Rxbuf[0] = data_1;
     Openmv_Rxbuf[1] = data_2;
     Openmv_Rxbuf[2] = data_3;
@@ -176,5 +167,10 @@ void MY_uart2_Recive(uint8_t data)
     Openmv_Rxbuf[10] = data_11;
     Openmv_Rxbuf[11] = data_12;
     Openmv_Rxbuf[12] = data_13;
-	DrvUart1SendBuf(Openmv_Rxbuf, 13);
+	//²âÊÔ´òÓ¡
+	//DrvUart1SendBuf(Openmv_Rxbuf, 13);
 }	
+
+
+
+

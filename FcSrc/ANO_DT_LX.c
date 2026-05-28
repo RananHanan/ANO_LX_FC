@@ -106,6 +106,7 @@ void ANO_DT_LX_Data_Receive_Prepare(u8 data)
 		rxstate = 4;
 		DT_RxBuffer[3] = data;
 		_data_len = data;
+		
 		_data_cnt = 0;
 	}
 	//接收数据区
